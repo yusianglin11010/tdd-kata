@@ -6,8 +6,8 @@ public static class Calculator
 {
     public static int Calculate(string input)
     {
-        var delimiter = ",";
-        var delimiterMatcher = new Regex(@"(?s)\/\/(?<delimiter>.)(?<nums>.*)");
+        var delimiter = GetDelimiter(input);
+        var delimiterMatcher = new Regex(@"(?s)\/\/(\[?)(?<delimiter>.*)(\]?)(\\n?)(?<nums>.*)");
         string nums;
         if (delimiterMatcher.IsMatch(input))
         {
@@ -41,5 +41,15 @@ public static class Calculator
             return inputNums.Sum();
         };
         return 0;
+    }
+    
+    private static string GetDelimiter(string input)
+    {
+        var delimiterMatcher = new Regex(@"(?s)\/\/(\[?)(?<delimiter>.*)(\]?)(\\n?)$");
+        if (delimiterMatcher.IsMatch(input))
+        {
+            return delimiterMatcher.Match(input).Groups["delimiter"].Value;
+        }
+        return ",";
     }
 }

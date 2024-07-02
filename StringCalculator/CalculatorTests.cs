@@ -1,9 +1,8 @@
-﻿using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
-using Xunit;
+﻿using Xunit;
 
 namespace StringCalculator
 {
-    public class TestCalculator
+    public class CalculatorTests
     {
         [Theory]
         [InlineData("1", 1)]
@@ -71,6 +70,16 @@ namespace StringCalculator
         [InlineData("1,1000",1001)]
 
         public void CalculateWithNumberGreaterThan1000(string input, int expected)
+        {
+            var result = Calculator.Calculate(input);
+            Assert.Equal(expected, result);
+        }
+        
+        [Theory]
+        [InlineData("//[;;;]\n1;;;2;;;3",6)]
+        [InlineData("//[;;;;]\n1;;;;2;;;;3",6)]
+        [InlineData("//[,,]\n1,,2,,3",6)]
+        public void CalculateArbitraryLengthOfDelimiter(string input, int expected)
         {
             var result = Calculator.Calculate(input);
             Assert.Equal(expected, result);
