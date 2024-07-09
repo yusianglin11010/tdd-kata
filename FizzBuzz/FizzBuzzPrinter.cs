@@ -1,4 +1,6 @@
-﻿namespace FizzBuzz;
+﻿using System;
+
+namespace FizzBuzz;
 
 public static class FizzBuzzPrinter
 {
